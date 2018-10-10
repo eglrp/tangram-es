@@ -85,7 +85,7 @@ public class MapController implements Renderer {
         SELECTION_BUFFER,
     }
 
-    public enum MapRegionChangeState {
+    private enum MapRegionChangeState {
         IDLE,
         JUMPING,
         ANIMATING,
@@ -1133,8 +1133,6 @@ public class MapController implements Renderer {
                         mapChangeListener.onRegionDidChange(true);
                     } else if (state == MapRegionChangeState.ANIMATING) {
                         mapChangeListener.onRegionIsChanging();
-                    } else { // ?? ANIMATING -> JUMPING?? Possible?
-                        mapChangeListener.onRegionWillChange(false);
                     }
                     break;
             }
@@ -1396,6 +1394,12 @@ public class MapController implements Renderer {
     private Handler uiThreadHandler;
     private CameraAnimationCallback cameraAnimationCallback;
     private boolean isGLRendererSet = false;
+    private Runnable setMapRegionAnimatingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            setMapRegionState(MapRegionChangeState.ANIMATING);
+        }
+    };
 
     // GLSurfaceView.Renderer methods
     // ==============================
@@ -1420,7 +1424,7 @@ public class MapController implements Renderer {
         }
 
         if (isCameraEasing) {
-            setMapRegionState(MapRegionChangeState.ANIMATING);
+            uiThreadHandler.post(setMapRegionAnimatingRunnable);
         }
 
         if (viewComplete) {
