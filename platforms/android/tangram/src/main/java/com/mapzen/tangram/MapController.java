@@ -846,8 +846,8 @@ public class MapController implements Renderer {
 
             @Override
             public boolean onFling(final float posX, final float posY, final float velocityX, final float velocityY) {
-                setMapRegionState(MapRegionChangeState.ANIMATING);
                 nativeHandleFlingGesture(mapPointer, posX, posY, velocityX, velocityY);
+                setMapRegionState(MapRegionChangeState.IDLE);
                 return true;
             }
 
@@ -1124,8 +1124,6 @@ public class MapController implements Renderer {
                 case JUMPING:
                     if (state == MapRegionChangeState.IDLE) {
                         mapChangeListener.onRegionDidChange(false);
-                    } else if (state == MapRegionChangeState.ANIMATING) { // e.g. panning to fling
-                        mapChangeListener.onRegionIsChanging();
                     }
                     break;
                 case ANIMATING:
