@@ -12,12 +12,16 @@
 
 - (void)mapView:(nonnull TGMapView *)mapView didLoadScene:(int)sceneID withError:(nullable NSError *)sceneError;
 - (void)mapViewDidCompleteLoading:(nonnull TGMapView *)mapView;
+- (void)mapViewRegionIsChanging:(TGMapView *)mapView;
+- (void)mapView:(TGMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
+- (void)mapView:(TGMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
 - (void)mapView:(nonnull TGMapView *)mapView didSelectFeature:(nullable NSDictionary *)feature atScreenPosition:(CGPoint)position;
 - (void)mapView:(nonnull TGMapView *)mapView didSelectLabel:(nullable TGLabelPickResult *)labelPickResult atScreenPosition:(CGPoint)position;
 - (void)mapView:(nonnull TGMapView *)mapView didSelectMarker:(nullable TGMarkerPickResult *)markerPickResult atScreenPosition:(CGPoint)position;
 - (void)mapView:(nonnull TGMapView *)view didCaptureScreenshot:(nonnull UIImage *)screenshot;
 
 - (void)mapView:(nonnull TGMapView *)view recognizer:(nonnull UIGestureRecognizer *)recognizer didRecognizeSingleTapGesture:(CGPoint)location;
+- (void)mapView:(TGMapView *)view recognizer:(UIGestureRecognizer *)recognizer didRecognizeDoubleTapGesture:(CGPoint)location;
 - (void)mapView:(nonnull TGMapView *)view recognizer:(nonnull UIGestureRecognizer *)recognizer didRecognizeLongPressGesture:(CGPoint)location;
 
 @end
